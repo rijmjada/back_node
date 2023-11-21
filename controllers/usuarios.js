@@ -27,7 +27,7 @@ const ListarUsuarios = async (req = request, res = response) => {
 // Crear
 const CrearUsuario = async (req, res = response) => {
 
-    const { nombre, correo, password, rol } = req.body;
+    const { nombre, correo, password, rol, img } = req.body;
     const usuario = new Usuario({ nombre, correo, password, rol });
 
     // Encriptar la contraseña
