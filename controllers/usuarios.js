@@ -68,12 +68,23 @@ const usuariosPatch = (req, res = response) => {
 
 // "Eliminar"
 const EliminarUsuario = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+        // Agrega la opción { new: true } para obtener el usuario actualizado
+        const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
 
-    const { id } = req.params;
-    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
+        if (!usuario) {
+            return res.status(404).json({ msg: 'Usuario no encontrado' });
+        }
+        res.json({
+            message: 'Usuario eliminiado',
+            usuario
+        });
 
-
-    res.json(usuario);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Error en el servidor' });
+    }
 }
 
 
